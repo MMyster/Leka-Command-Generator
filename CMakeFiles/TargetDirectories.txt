@@ -1,0 +1,3 @@
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/CMakeFiles/rebuild_cache.dir
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/CMakeFiles/edit_cache.dir
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/CMakeFiles/lkctrl.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/lkctrl.dir/sources/main.cpp.o CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o  -o lkctrl 

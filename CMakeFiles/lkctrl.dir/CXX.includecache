@@ -1,0 +1,88 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKAlphaComSpecs.h
+stdint.h
+-
+
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKCommandGenerator.h
+stdint.h
+-
+string
+-
+
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/LKCommandGenerator.cpp
+../include/LKCommandGenerator.h
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKCommandGenerator.h
+../include/LKAlphaComSpecs.h
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKAlphaComSpecs.h
+
+/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/main.cpp
+iostream
+-
+string
+-
+vector
+-
+CLI11.hpp
+-
+
+/opt/CLI11/CLI11.hpp
+memory
+-
+string
+-
+cmath
+-
+functional
+-
+numeric
+-
+map
+-
+fstream
+-
+tuple
+-
+utility
+-
+iomanip
+-
+locale
+-
+sstream
+-
+algorithm
+-
+cstdint
+-
+iostream
+-
+set
+-
+type_traits
+-
+iterator
+-
+stdexcept
+-
+vector
+-
+limits
+-
+exception
+-
+filesystem
+-
+filesystem
+-
+sys/stat.h
+-
+sys/types.h
+-
+
