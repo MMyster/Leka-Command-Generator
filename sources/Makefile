@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/CMakeFiles" "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/CMakeFiles/progress.marks"
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(CMAKE_COMMAND) -E cmake_progress_start "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/CMakeFiles" "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/sources/CMakeFiles/progress.marks"
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f CMakeFiles/Makefile2 sources/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f CMakeFiles/Makefile2 sources/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,71 +97,60 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f CMakeFiles/Makefile2 sources/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f CMakeFiles/Makefile2 sources/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named lkctrl
+# Convenience name for target.
+sources/CMakeFiles/src_lkctrl.dir/rule:
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f CMakeFiles/Makefile2 sources/CMakeFiles/src_lkctrl.dir/rule
+.PHONY : sources/CMakeFiles/src_lkctrl.dir/rule
 
-# Build rule for target.
-lkctrl: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 lkctrl
-.PHONY : lkctrl
+# Convenience name for target.
+src_lkctrl: sources/CMakeFiles/src_lkctrl.dir/rule
 
-# fast build rule for target.
-lkctrl/fast:
-	$(MAKE) -f CMakeFiles/lkctrl.dir/build.make CMakeFiles/lkctrl.dir/build
-.PHONY : lkctrl/fast
-
-#=============================================================================
-# Target rules for targets named src_lkctrl
-
-# Build rule for target.
-src_lkctrl: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 src_lkctrl
 .PHONY : src_lkctrl
 
 # fast build rule for target.
 src_lkctrl/fast:
-	$(MAKE) -f sources/CMakeFiles/src_lkctrl.dir/build.make sources/CMakeFiles/src_lkctrl.dir/build
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f sources/CMakeFiles/src_lkctrl.dir/build.make sources/CMakeFiles/src_lkctrl.dir/build
 .PHONY : src_lkctrl/fast
 
-main.o: main.cpp.o
+LKCommandGenerator.o: LKCommandGenerator.cpp.o
 
-.PHONY : main.o
+.PHONY : LKCommandGenerator.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/lkctrl.dir/build.make CMakeFiles/lkctrl.dir/main.cpp.o
-.PHONY : main.cpp.o
+LKCommandGenerator.cpp.o:
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f sources/CMakeFiles/src_lkctrl.dir/build.make sources/CMakeFiles/src_lkctrl.dir/LKCommandGenerator.cpp.o
+.PHONY : LKCommandGenerator.cpp.o
 
-main.i: main.cpp.i
+LKCommandGenerator.i: LKCommandGenerator.cpp.i
 
-.PHONY : main.i
+.PHONY : LKCommandGenerator.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/lkctrl.dir/build.make CMakeFiles/lkctrl.dir/main.cpp.i
-.PHONY : main.cpp.i
+LKCommandGenerator.cpp.i:
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f sources/CMakeFiles/src_lkctrl.dir/build.make sources/CMakeFiles/src_lkctrl.dir/LKCommandGenerator.cpp.i
+.PHONY : LKCommandGenerator.cpp.i
 
-main.s: main.cpp.s
+LKCommandGenerator.s: LKCommandGenerator.cpp.s
 
-.PHONY : main.s
+.PHONY : LKCommandGenerator.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/lkctrl.dir/build.make CMakeFiles/lkctrl.dir/main.cpp.s
-.PHONY : main.cpp.s
+LKCommandGenerator.cpp.s:
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(MAKE) -f sources/CMakeFiles/src_lkctrl.dir/build.make sources/CMakeFiles/src_lkctrl.dir/LKCommandGenerator.cpp.s
+.PHONY : LKCommandGenerator.cpp.s
 
 # Help Target
 help:
@@ -171,11 +160,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... lkctrl"
 	@echo "... src_lkctrl"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... LKCommandGenerator.o"
+	@echo "... LKCommandGenerator.i"
+	@echo "... LKCommandGenerator.s"
 .PHONY : help
 
 
@@ -187,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

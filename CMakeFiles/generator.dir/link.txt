@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/generator.dir/sources/main.cpp.o CMakeFiles/generator.dir/sources/LKCommandGenerator.cpp.o  -o generator 

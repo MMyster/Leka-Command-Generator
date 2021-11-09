@@ -5,13 +5,12 @@ include_directories(/opt/CLI11)
 project(leka_command_generator)
 
 set(SOURCES    
-    sources/main.cpp
-    sources/LKCommandGenerator.cpp
-    )
-    
-set(HEADERS
-    include/LKAlphaComSpecs.h
-    include/LKCommandGenerator.h
+    main.cpp
     )
 
-add_executable(lkctrl ${SOURCES} ${HEADERS})
+
+add_subdirectory (sources)
+
+add_executable(lkctrl ${SOURCES})
+
+target_link_libraries(lkctrl src_lkctrl)

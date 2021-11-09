@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o"
-  "CMakeFiles/lkctrl.dir/sources/main.cpp.o"
+  "CMakeFiles/lkctrl.dir/main.cpp.o"
   "lkctrl"
   "lkctrl.pdb"
 )

@@ -6,23 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKAlphaComSpecs.h
-stdint.h
+/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/include/LKCommandGenerator.h
+array
 -
-
-/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKCommandGenerator.h
-stdint.h
+vector
 -
 string
 -
 
-/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/LKCommandGenerator.cpp
-../include/LKCommandGenerator.h
-/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKCommandGenerator.h
-../include/LKAlphaComSpecs.h
-/home/mourad/Documents/CPP_LEKA/Leka Command Generator/include/LKAlphaComSpecs.h
-
-/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/main.cpp
+/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/main.cpp
 iostream
 -
 string
@@ -31,6 +23,8 @@ vector
 -
 CLI11.hpp
 -
+include/LKCommandGenerator.h
+/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/include/LKCommandGenerator.h
 
 /opt/CLI11/CLI11.hpp
 memory

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/mourad/Documents/CPP_LEKA/Leka Command Generator"
+CMAKE_SOURCE_DIR = "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/mourad/Documents/CPP_LEKA/Leka Command Generator"
+CMAKE_BINARY_DIR = "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/lkctrl.dir/depend.make
@@ -57,45 +57,31 @@ include CMakeFiles/lkctrl.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/lkctrl.dir/flags.make
 
-CMakeFiles/lkctrl.dir/sources/main.cpp.o: CMakeFiles/lkctrl.dir/flags.make
-CMakeFiles/lkctrl.dir/sources/main.cpp.o: sources/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/mourad/Documents/CPP_LEKA/Leka Command Generator/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lkctrl.dir/sources/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lkctrl.dir/sources/main.cpp.o -c "/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/main.cpp"
+CMakeFiles/lkctrl.dir/main.cpp.o: CMakeFiles/lkctrl.dir/flags.make
+CMakeFiles/lkctrl.dir/main.cpp.o: main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lkctrl.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lkctrl.dir/main.cpp.o -c "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/main.cpp"
 
-CMakeFiles/lkctrl.dir/sources/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lkctrl.dir/sources/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/main.cpp" > CMakeFiles/lkctrl.dir/sources/main.cpp.i
+CMakeFiles/lkctrl.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lkctrl.dir/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/main.cpp" > CMakeFiles/lkctrl.dir/main.cpp.i
 
-CMakeFiles/lkctrl.dir/sources/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lkctrl.dir/sources/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/main.cpp" -o CMakeFiles/lkctrl.dir/sources/main.cpp.s
-
-CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o: CMakeFiles/lkctrl.dir/flags.make
-CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o: sources/LKCommandGenerator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/mourad/Documents/CPP_LEKA/Leka Command Generator/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o -c "/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/LKCommandGenerator.cpp"
-
-CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/LKCommandGenerator.cpp" > CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.i
-
-CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/mourad/Documents/CPP_LEKA/Leka Command Generator/sources/LKCommandGenerator.cpp" -o CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.s
+CMakeFiles/lkctrl.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lkctrl.dir/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/main.cpp" -o CMakeFiles/lkctrl.dir/main.cpp.s
 
 # Object files for target lkctrl
 lkctrl_OBJECTS = \
-"CMakeFiles/lkctrl.dir/sources/main.cpp.o" \
-"CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o"
+"CMakeFiles/lkctrl.dir/main.cpp.o"
 
 # External object files for target lkctrl
 lkctrl_EXTERNAL_OBJECTS =
 
-lkctrl: CMakeFiles/lkctrl.dir/sources/main.cpp.o
-lkctrl: CMakeFiles/lkctrl.dir/sources/LKCommandGenerator.cpp.o
+lkctrl: CMakeFiles/lkctrl.dir/main.cpp.o
 lkctrl: CMakeFiles/lkctrl.dir/build.make
+lkctrl: sources/libsrc_lkctrl.a
 lkctrl: CMakeFiles/lkctrl.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/mourad/Documents/CPP_LEKA/Leka Command Generator/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable lkctrl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable lkctrl"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lkctrl.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -108,6 +94,6 @@ CMakeFiles/lkctrl.dir/clean:
 .PHONY : CMakeFiles/lkctrl.dir/clean
 
 CMakeFiles/lkctrl.dir/depend:
-	cd "/home/mourad/Documents/CPP_LEKA/Leka Command Generator" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/mourad/Documents/CPP_LEKA/Leka Command Generator" "/home/mourad/Documents/CPP_LEKA/Leka Command Generator" "/home/mourad/Documents/CPP_LEKA/Leka Command Generator" "/home/mourad/Documents/CPP_LEKA/Leka Command Generator" "/home/mourad/Documents/CPP_LEKA/Leka Command Generator/CMakeFiles/lkctrl.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator" "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/CMakeFiles/lkctrl.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/lkctrl.dir/depend
 
