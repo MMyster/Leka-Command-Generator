@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/opt/CLI11 
+CXX_INCLUDES = -I/opt/CLIPP -I"/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/./include" 
 

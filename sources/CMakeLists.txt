@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.4)
 
-include_directories(/opt/CLI11)
-
 project(src_leka_command_generator)
 
 set(SOURCES    

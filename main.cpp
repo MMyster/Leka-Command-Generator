@@ -1,94 +1,113 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include <CLI11.hpp>
-#include "include/LKCommandGenerator.h"
+#include <clipp.h>
+#include <LKCommandGenerator.h>
 
 int main(int argc, char *argv[])
 {
-    CLI::App lk_command_generator{"Leka Command Generator"};/*Project name : lk_command_generator*/
+    using namespace clipp;
+    using namespace LKCommandGenerator;
 
-    lk_command_generator.require_subcommand(1);/*Require 1 subcommand to run*/
+    command_frame frame;
+
+    /*--------------------------------------
+       HELP
+    ---------------------------------------*/
+    bool help_focus;
+    auto help="Manual"%(
+         command("-h","--help","man").set(help_focus)
+    );
 
 
     /*--------------------------------------
-        LED DEFINE
-    ----------------------------------------*/
+        LED
+    ---------------------------------------*/
 
-    auto led=lk_command_generator.add_subcommand("led","Control led(s)");
+    bool led_focus=false;
+    bool led_ears_focus=false;
+    bool led_belt_focus=false;
+    bool led_all_target_focus=false;
+    bool led_range_target_focus=false;
+    frame_t led_first_target;
+    frame_t led_last_target;
+    frame_t led_single_target;
+    std::vector<frame_t>rgb_ctrl_values{0,0,0};
 
-    auto ears_led_ctrl=false;
-    led->add_flag("-e,--ears",ears_led_ctrl,"Control ears leds");
+    auto led_setup="Led setup"%(
+      command("led").set(led_focus) %"Control led(s)",
+      required("-e","--ears").set(led_ears_focus) %"Control ears leds of robot"|
+      required("-b","--belt").set(led_belt_focus) %"Control belt leds of robot",
+      option("-A","--all").set(led_all_target_focus) %"Control all leds of robot"|
+      option("-R","--range").set(led_range_target_focus)%"Control a range of leds of robot" & integer("first target",led_first_target) & integer("last target",led_last_target)
+            .if_missing([]{ std::cout << "You need to provide two targets!\n"; } ) |
+      integer("target",led_single_target)
+            .if_missing([]{ std::cout << "You need to provide one target!\n"; } ),
+      integer("Red value",rgb_ctrl_values[0]) & integer("Green value",rgb_ctrl_values[1]) & integer("Blue value",rgb_ctrl_values[2])
+            .if_missing([]{ std::cout << "You need to provide RGB values!\n"; } )%"Provide RGB value"|
+      required("-r","red").set(rgb_ctrl_values[0],255)|required("-g","green").set(rgb_ctrl_values[1],255)|required("-b","blue").set(rgb_ctrl_values[2],255)
+    );
 
-    auto belt_led_ctrl=false;
-    led->add_flag("-b,--belt",belt_led_ctrl,"Control belt leds");
 
-   /*
-    auto callback = [](int count){std::cout << "This was called " << count << " times";};
-    led->add_flag_function("-c", callback, "Optional description");
-
-    led->callback([&](){
-        if(!ears_led_ctrl) {
-          std::cout << "\nNo parameters\n" <<  std::endl;
-        } else {
-          std::cout << "\nEars ON\n" <<  std::endl;
-       
-        }
-        
-    });
-
-*/
       /*--------------------------------------
-        MOTOR DEFINE
-    ----------------------------------------*/
+        MOTOR
+      --------------------------------------*/
 
-    auto motor=lk_command_generator.add_subcommand("motor","Control motor(s)");
+    bool motor_all_target=false;
+    bool motor_duo_target=false;
+    bool motor_left_target=false;
+    bool motor_right_target=false;
 
+    auto motor_setup="Motor setup"%(
+      command("motor"),
+      option("-A","--all").set(motor_all_target),
+      option("-D","--duo").set(motor_duo_target),
+      option("-l","--left").set(motor_left_target),
+      option("-r","--right").set(motor_right_target)
+    );
+
+
+      /*--------------------------------------
+        CLI
+      --------------------------------------*/
+    std::vector<std::string> wrong;
+    auto cli=(
+      help | led_setup | motor_setup,
+      any_other(wrong) 
+    );
+
+    if(parse(argc, argv, cli)) {
+
+      if(led_focus){
+        if(led_ears_focus){
+          if(led_all_target_focus){
+            for(frame_t id : list_id_led_ears){
+              frame.list_command_group.push_back({get_length_led_all(),get_id_command_led_ears_all(), id,rgb_ctrl_values});
+            }
+
+            for(command_group command : frame.list_command_group){
+              std::cout << "\nR :" << command.ctrl_values[0];
+              std::cout << "\nG :" << command.ctrl_values[1];
+              std::cout << "\nB :" << command.ctrl_values[2];
+              std::cout << "\n";
+            }
+          }
+        }
+
+      }
+    std::cout << "\nCommand valid\n" << "\n";
     
-    std::vector<uint8_t>all_motor_ctrls;
-    auto motor_all_opt=motor->add_option("-a,--all",all_motor_ctrls,"Control all motor features")
-    ->expected(LKCommandGenerator::get_length_motor_all());
+    }
+    else {
+        std::cout << "\nCommand not valid\n" << "\n";
+        for(const auto& arg : wrong) {
+            std::cout << "'" << arg << "' is not a valid command line argument\n";
+        }
+        std::cout << "Usage:\n" << usage_lines(cli,argv[0]) << "\n";
 
-    std::vector<uint8_t>duo_motor_ctrls;
-    auto motor_duo_opt=motor->add_option("-R,--range",duo_motor_ctrls,"Control both spins")
-    ->expected(LKCommandGenerator::get_length_motor_duo());
+        //std::cout << make_man_page(cli, argv[0]) << '\n';
 
-    std::vector<uint8_t>left_motor_ctrls;
-    auto motor_left_opt=motor->add_option("-l,--left",left_motor_ctrls,"Control the left spin")
-    ->expected(LKCommandGenerator::get_length_motor_single());
-
-    std::vector<uint8_t>right_motor_ctrls;
-    auto motor_right_opt=motor->add_option("-r,--right",right_motor_ctrls,"Control the rigth spin")
-    ->expected(LKCommandGenerator::get_length_motor_single());
-
+    }
     
-    
-    
-
-    int v1;
-    motor->add_option<int,int>("--vs",v1);
-
-
-     motor->callback([&](){
-        /*....*/
-         std::cout << "\nMotor ON!\n" <<  std::endl;
-         std::cout << v1 << std::endl;
-         std::cout << typeid(v1).name() << std::endl;
-
-    });
-
-
-    /*--------------------------------------
-        PARSE
-    ----------------------------------------*/
-
-     CLI11_PARSE(lk_command_generator, argc, argv);
-
-    std::cout << "\nThanks for using Leka Coomand Generator!\n" <<  std::endl;
-
-
-
-    
-    return 0;
+    return EXIT_SUCCESS;
 
 }
