@@ -46,13 +46,7 @@ iterator
 functional
 -
 
-include/LKAlphaComSpecs.h
-stdint.h
--
-
 include/LKCommandGenerator.h
-LKAlphaComSpecs.h
--
 array
 -
 list

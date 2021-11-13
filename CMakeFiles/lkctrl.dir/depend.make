@@ -3,6 +3,5 @@
 
 CMakeFiles/lkctrl.dir/main.cpp.o: main.cpp
 CMakeFiles/lkctrl.dir/main.cpp.o: /opt/CLIPP/clipp.h
-CMakeFiles/lkctrl.dir/main.cpp.o: include/LKAlphaComSpecs.h
 CMakeFiles/lkctrl.dir/main.cpp.o: include/LKCommandGenerator.h
 
