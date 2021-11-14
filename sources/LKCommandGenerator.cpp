@@ -4,6 +4,7 @@
 
 
 
+
 auto LKCommandGenerator::get_start_sequence()->frame_t* const
 {
     return LKFrame::start::sequence;
@@ -59,27 +60,27 @@ auto LKCommandGenerator::get_length_led_single()->frame_t const
     return LKCommand::led::length::single;
 }
 
-auto get_id_command_motor()->frame_t const
+auto LKCommandGenerator::get_id_command_motor()->frame_t const
 {
     return LKCommand::motor::id;
 }
 
-auto get_id_command_motor_all()->frame_t const
+auto LKCommandGenerator::get_id_command_motor_all()->frame_t const
 {
     return LKCommand::motor::all;
 }
 
-auto get_id_command_motor_duo()->frame_t const
+auto LKCommandGenerator::get_id_command_motor_duo()->frame_t const
 {
     return LKCommand::motor::duo;
 }
 
-auto get_id_command_motor_left()->frame_t const
+auto LKCommandGenerator::get_id_command_motor_left()->frame_t const
 {
     return LKCommand::motor::left;
 }
 
-auto get_id_command_motor_right()->frame_t const
+auto LKCommandGenerator::get_id_command_motor_right()->frame_t const
 {
     return LKCommand::motor::right;
 }
