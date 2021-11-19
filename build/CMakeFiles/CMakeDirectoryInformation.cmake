@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/build")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)
