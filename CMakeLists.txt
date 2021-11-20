@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.4)
 
-include_directories(/opt/CLIPP)
+set(CMAKE_CXX_STANDARD 20)
+
+include_directories(./clipp)
 include_directories(./include)
 
 project(leka_command_generator)
 
-set(SOURCES    
+set(SOURCES
     main.cpp
     )
 

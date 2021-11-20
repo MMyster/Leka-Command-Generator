@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/lkctrl.dir/main.cpp.o  -o lkctrl  sources/libsrc_lkctrl.a 
