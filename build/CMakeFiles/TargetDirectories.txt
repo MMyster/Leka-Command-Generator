@@ -1,6 +1,0 @@
-/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/build/CMakeFiles/rebuild_cache.dir
-/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/build/CMakeFiles/edit_cache.dir
-/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/build/CMakeFiles/lkctrl.dir
-/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/build/sources/CMakeFiles/rebuild_cache.dir
-/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/build/sources/CMakeFiles/edit_cache.dir
-/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/build/sources/CMakeFiles/src_lkctrl.dir
