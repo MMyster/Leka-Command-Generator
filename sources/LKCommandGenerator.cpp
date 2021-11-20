@@ -33,6 +33,9 @@ this->ctrl_values.push_back(this->id_command);
 
 /* Led */
 
+ const std::vector<frame_t> command_group_led::list_id_led_belt={0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13};
+ const std::vector<frame_t> command_group_led::list_id_led_ears={0x00,0x01};
+
 command_group_led::command_group_led():command_group()
 {
 
@@ -239,6 +242,27 @@ auto command_group_led::update_crtl_values()->void
         break;
     }
 
+}
+
+auto command_group_led::display_list_targets()->void
+{
+    std::cout << std::hex;
+    std::cout << std::endl;
+    std::cout << " Ears : ";
+    std::cout << " { ";
+    for(frame_t cur_frame : list_id_led_ears){
+        std::cout << static_cast<int>(cur_frame) << " ";
+    }
+    std::cout << "} ";
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << " Belt : ";
+    std::cout << " { ";
+    for(frame_t cur_frame : list_id_led_belt){
+        std::cout << static_cast<int>(cur_frame) << " ";
+    }
+    std::cout << "} ";
+    std::cout << std::endl;
 }
 
 auto command_group_led::get_id_command_led()->frame_t const
@@ -454,21 +478,34 @@ auto Frame::add_data(std::vector<frame_t>list)->void
 
 auto Frame::calculate_length()->frame_t
 {
-    frame_t length=0;
-    length+=start_sequence.size(); //start sequence
-    length+=1;//length
-    length+=data.size();//data
-    length+=1;//checksum
+    frame_t length=data.size();//data
+    this->length=length;
     return length;
 }
+
+auto Frame::calculate_packet_size()->frame_t
+{
+    frame_t size=0;
+    size+=start_sequence.size(); //start sequence
+    size+=1;//length
+    size+=data.size();//data
+    size+=1;//checksum
+    this->packet_size=size;
+    return size;
+}
+
+
 
 auto Frame::calculate_checksum()->frame_t
 {
     frame_t checksum = 0;
+    checksum = (frame_t) ((checksum >> 1) | (checksum << 7)); // Circular shift
+    checksum = (frame_t) (checksum + length); // Add segment
+    checksum &= 0xFF; // Apply bitmask
     for (frame_t cur_frame : data) {
-        checksum = (frame_t) (((checksum & 0xFF) >> 1) | (checksum << 7)); // Circular shift
+        checksum = (frame_t) ((checksum >> 1) | (checksum << 7)); // Circular shift
         checksum = (frame_t) (checksum + cur_frame); // Add segment
-        checksum &= 0b1111; // Apply bitmask
+        checksum &= 0xFF; // Apply bitmask
     }
     return checksum;
 }
@@ -491,6 +528,12 @@ auto Frame::display_packet()->void{
         std::cout << static_cast<int>(cur_frame) << " ";
     }
     std::cout << "] ";
+    std::cout << std::endl;
+    std::cout << std::dec;
+    std::cout << std::endl;
+    std::cout << "Packet size : ";
+    std::cout << static_cast<int>(calculate_packet_size());
+    std::cout << " bytes";
     std::cout << std::endl;
 }
 

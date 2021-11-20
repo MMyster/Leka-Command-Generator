@@ -27,52 +27,62 @@ int main(int argc, char *argv[])
         LED
     ---------------------------------------*/
 
-    enum class led_part{ears,belt} led_selected_part;
-    enum class led_scope{single,range,all} led_selected_scope;
+    enum class led_ctrl{command,list} led_selected_ctrl=led_ctrl::command;
+    enum class led_part{ears,belt} led_selected_part=led_part::belt;
+    enum class led_scope{single,range,all} led_selected_scope=led_scope::single;
     std::vector<int>led_targets;
     int led_first_target;
     int led_last_target;
     int led_red_value=0;
     int led_green_value=0;
     int led_blue_value=0;
-    bool led_hex=false;
+    int led_base=10;
 
     auto led_setup="Led setup"%(
-      command("led").set(selected,command_focus::led) %"Control led(s)",
-
-      "Robot parts which implement leds"%
+      command("led").set(selected,command_focus::led) %"Control led(s)" &
       (
-      required("-e","--ears").set(led_selected_part,led_part::ears) %"Control ears part of robot"|
-      required("-b","--belt").set(led_selected_part,led_part::belt) %"Control belt part of robot"
-      ),
+        "List of all led(s) id"%
+        (
+          option("--list").set(led_selected_ctrl,led_ctrl::list)([&](const char* s) { command_group_led::display_list_targets(); })
+        )
+          |
+        (
 
-      "Targets commands"%
-      (
-      option("-A","--all").set(led_selected_scope,led_scope::all) %"Control all leds of robot" %"Aim all targets"|
-      "Control a range of leds of robot"%
-      (option("-R","--range").set(led_selected_scope,led_scope::range)
-      & value("first target")([&](const char* s) { led_first_target = std::stoi(s,0,16); }) 
-      & value("last target")([&](const char* s) { led_last_target = std::stoi(s,0,16); }) 
-            .if_missing([]{ std::cout << "You need to provide two targets!\n"; } )) %"Aim a range of targets [hex]"|
-      values("targets")([&](const char* s) { led_targets.push_back(std::stoi(s,0,16)); })
-            .if_missing([]{ std::cout << "You need to provide one target!\n"; } ) %"Aim one target [hex]"
-      ),
+          "Robot parts which implement leds"%
+          (
+          required("-e","--ears").set(led_selected_part,led_part::ears) %"Control ears part of robot"|
+          required("-b","--belt").set(led_selected_part,led_part::belt) %"Control belt part of robot"
+          ),
 
-      "RGB data controls"%
-      (
-      option("-V","--values") & integer("Red value",led_red_value) & integer("Green value",led_green_value) & integer("Blue value",led_blue_value)
-            .if_missing([]{ std::cout << "You need to provide RGB values!\n"; } ) %"Provide RGB values"
-            |
-      option("-VH","--values-hex","--hex").set(led_hex) & value("Red value")([&](const char* s) { led_red_value = std::stoi(s,0,16); }) 
-                                                    & value("Green value") ([&](const char* s) { led_green_value = std::stoi(s,0,16); })
-                                                    & value("Blue value") ([&](const char* s) { led_blue_value = std::stoi(s,0,16); })
-            .if_missing([]{ std::cout << "You need to provide RGB values!\n"; } ) %"Provide RGB values"
-            |
-            option("-r","red").set(led_red_value,255)%"set Red value"|
-            option("-g","green").set(led_green_value,255)%"set Green value"|
-            option("-b","blue").set(led_blue_value,255)%"set Blue value"
+          "Targets commands"%
+          (
+          option("-A","--all").set(led_selected_scope,led_scope::all) %"Control all leds of robot" %"Aim all targets"|
+          "Control a range of leds of robot"%
+          (option("-R","--range").set(led_selected_scope,led_scope::range)
+          & value("first target")([&](const char* s) { led_first_target = std::stoi(s,0,16); }) 
+          & value("last target")([&](const char* s) { led_last_target = std::stoi(s,0,16); }) 
+                .if_missing([]{ std::cout << "You need to provide two targets!\n"; } )) %"Aim a range of targets [hex]"|
+        (values("targets")([&](const char* s) { led_targets.push_back(std::stoi(s,0,16)); })
+                .if_missing([]{ std::cout << "You need to provide one target!\n"; } ) ) %"Aim a set of target [hex]"
+          ),
+
+          "RGB data controls"%
+          (
+      
+                ( 
+                option("-H","--values-hex","--hex").set(led_base,16)%"[hex]", (required("-V","--values") & value("Red value")([&](const char* s) { led_red_value = std::stoi(s,0,led_base); }) 
+                                                        & value("Green value") ([&](const char* s) { led_green_value = std::stoi(s,0,led_base); })
+                                                        & value("Blue value") ([&](const char* s) { led_blue_value = std::stoi(s,0,led_base); })
+                .if_missing([]{ std::cout << "You need to provide RGB values!\n"; } ))%"Provide RGB values" 
+                ) 
+                |
+                option("-r","red").set(led_red_value,255)%"set max Red value"|
+                option("-g","green").set(led_green_value,255)%"set max Green value"|
+                option("-b","blue").set(led_blue_value,255)%"set max Blue value"
+          )
+
+        )
       )
-
     );
 
 
@@ -85,37 +95,26 @@ int main(int argc, char *argv[])
     int motor_right_spin;
     int motor_left_speed;
     int motor_right_speed;
-    bool motor_hex;
+    int motor_base=10;
 
     auto motor_setup="Motor setup"%(
       command("motor").set(selected,command_focus::motor)%"Control motor features" &
       (
-     (
-      (required("-A","--all").set(motor_selected_scope,motor_scope::all) & value("Direction")([&](const char* s) { motor_left_spin = std::stoi(s);motor_right_spin = std::stoi(s); }) 
-                                                        & value("Speed")([&](const char* s) { motor_left_speed = std::stoi(s);motor_right_speed = std::stoi(s); }) )%"Give same instructions towards both wheels"|
-      (required("-D","--duo").set(motor_selected_scope,motor_scope::duo)  & integer("Left Spin",motor_left_spin) & integer("Left Speed",motor_left_speed)  
-                                                  & integer("Right Spin",motor_right_spin) & integer("Right Speed",motor_right_speed))%"Give instructions for each wheel"|
-      (required("-l","--left").set(motor_selected_scope,motor_scope::left) & integer("Left Spin",motor_left_spin) & integer("Left Speed",motor_left_speed))%"Give instructions towards left wheel" |
-      (required("-r","--right").set(motor_selected_scope,motor_scope::right) & integer("Right Spin",motor_right_spin) & integer("Right Speed",motor_right_speed) )%"Give instructions towards right wheel" 
-     ) 
-     |
-     (option("-H","--hex").set(motor_hex) & (
-      (required("-A","--all").set(motor_selected_scope,motor_scope::all) & value("Direction")([&](const char* s) { motor_left_spin = std::stoi(s,0,16);motor_right_spin = std::stoi(s,0,16); }) 
-                                                        & value("Speed")([&](const char* s) { motor_left_speed = std::stoi(s,0,16);motor_right_speed = std::stoi(s,0,16); }) )%"Give same instructions towards both wheels"|
-      (required("-D","--duo").set(motor_selected_scope,motor_scope::duo)  & value("Left Spin")([&](const char* s) { motor_left_spin = std::stoi(s,0,16); }) 
-                                                                          & value("Left Speed")([&](const char* s) { motor_left_speed = std::stoi(s,0,16); })   
-                                                                          & value("Right Spin")([&](const char* s) { motor_right_spin = std::stoi(s,0,16); })  
-                                                                          & value("Right Speed")([&](const char* s) { motor_right_speed = std::stoi(s,0,16); }) 
+     (option("-H","--hex").set(motor_base,16) %"[hex]" , (
+      (required("-A","--all").set(motor_selected_scope,motor_scope::all) & value("Direction")([&](const char* s) { motor_left_spin = std::stoi(s,0,motor_base);motor_right_spin = std::stoi(s,0,motor_base); }) 
+                                                        & value("Speed")([&](const char* s) { motor_left_speed = std::stoi(s,0,motor_base);motor_right_speed = std::stoi(s,0,motor_base); }) )%"Give same instructions towards both wheels"|
+      (required("-D","--duo").set(motor_selected_scope,motor_scope::duo)  & value("Left Spin")([&](const char* s) { motor_left_spin = std::stoi(s,0,motor_base); }) 
+                                                                          & value("Left Speed")([&](const char* s) { motor_left_speed = std::stoi(s,0,motor_base); })   
+                                                                          & value("Right Spin")([&](const char* s) { motor_right_spin = std::stoi(s,0,motor_base); })  
+                                                                          & value("Right Speed")([&](const char* s) { motor_right_speed = std::stoi(s,0,motor_base); }) 
       ) %"Give instructions for each wheel"|
-      (required("-l","--left").set(motor_selected_scope,motor_scope::left) & value("Left Spin")([&](const char* s) { motor_left_spin = std::stoi(s,0,16); }) 
-                                                                            & value("Left Speed")([&](const char* s) { motor_left_speed = std::stoi(s,0,16); }) 
+      (required("-l","--left").set(motor_selected_scope,motor_scope::left) & value("Left Spin")([&](const char* s) { motor_left_spin = std::stoi(s,0,motor_base); }) 
+                                                                            & value("Left Speed")([&](const char* s) { motor_left_speed = std::stoi(s,0,motor_base); }) 
       )%"Give instructions towards left wheel" |
-      (required("-r","--right").set(motor_selected_scope,motor_scope::right) & value("Right Spin")([&](const char* s) { motor_right_spin = std::stoi(s,0,16); }) 
-                                                                             & value("Right Speed")([&](const char* s) { motor_right_speed = std::stoi(s,0,16); })  
+      (required("-r","--right").set(motor_selected_scope,motor_scope::right) & value("Right Spin")([&](const char* s) { motor_right_spin = std::stoi(s,0,motor_base); }) 
+                                                                             & value("Right Speed")([&](const char* s) { motor_right_speed = std::stoi(s,0,motor_base); })  
       )  %"Give instructions towards right wheel" 
       ) )
-
-
       )
     );
 
@@ -153,6 +152,7 @@ int main(int argc, char *argv[])
       --------------------------------------*/
       case command_focus::led :
       {
+        if(led_selected_ctrl==led_ctrl::command){
 
           switch (led_selected_scope)
           {
@@ -193,13 +193,17 @@ int main(int argc, char *argv[])
                     static_cast<int>(led_selected_part)
                   );
                   command.update_crtl_values();
-                  frame.add_data(command.get_ctrl_values()); 
+                  frame.add_data(command.get_ctrl_values());
           }
             break;
           
           default:
             break;
-          }     
+          }  
+          frame.make_packet();
+          frame.display_packet();
+          frame.send_packet(); 
+        }   
       break;
       }
 
@@ -220,6 +224,9 @@ int main(int argc, char *argv[])
 
           command.update_crtl_values();
           frame.add_data(command.get_ctrl_values());
+          frame.make_packet();
+          frame.display_packet();
+          frame.send_packet();
 
       break;
       }
@@ -229,9 +236,6 @@ int main(int argc, char *argv[])
       break;
       }
 
-    frame.make_packet();
-    frame.display_packet();
-    frame.send_packet();
     std::cout << "\nOK !!!\n" << "\n";
     
     }

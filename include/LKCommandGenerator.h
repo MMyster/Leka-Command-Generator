@@ -65,13 +65,14 @@ class command_group_led : public command_group
     frame_t green_value;
     frame_t blue_value;
 
-    const std::vector<frame_t> list_id_led_belt={0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x13};
-    const std::vector<frame_t> list_id_led_ears={0x00,0x01};
+    static const std::vector<frame_t> list_id_led_belt;
+    static const std::vector<frame_t> list_id_led_ears;
 
 
     public :
 
     command_group_led();
+
     command_group_led(frame_t red_value,frame_t green_value,frame_t blue_value,int part=0,std::vector<frame_t>targets={});
 
     command_group_led(frame_t red_value,frame_t green_value,frame_t blue_value,int part,frame_t first_target,frame_t last_target);
@@ -121,6 +122,12 @@ class command_group_led : public command_group
      * @return {void}  : 
      */
     auto update_crtl_values()->void;
+
+    /**
+     * Disply list of all availables targets
+     * @return {void}  : 
+     */
+    static auto display_list_targets()->void;
     
     auto get_id_command_led()->frame_t const;
 
@@ -211,6 +218,8 @@ class Frame
     std::vector<frame_t>packet;
     frame_t checksum; 
 
+    frame_t packet_size;
+
     public :
 
     Frame();
@@ -243,10 +252,16 @@ class Frame
     auto add_data(std::vector<frame_t>list)->void;
 
     /**
-     * Calculate length of the packet
+     * Calculate length of the group command
      * @return {frame_t}  : 
      */
     auto calculate_length()->frame_t;
+    
+    /**
+     * Calculate size of the packet
+     * @return {frame_t}  : 
+     */
+    auto calculate_packet_size()->frame_t;
 
     /**
      * Calculate checksum of the packet payload data
