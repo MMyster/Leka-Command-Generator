@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsrc_lkctrl.a  CMakeFiles/src_lkctrl.dir/LKCommandGenerator.cpp.o
+/usr/bin/ranlib libsrc_lkctrl.a

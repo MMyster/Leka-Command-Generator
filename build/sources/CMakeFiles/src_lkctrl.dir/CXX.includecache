@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/LKAlphaComSpecs.h
+stdint.h
+-
+
+../include/LKCommandGenerator.h
+array
+-
+list
+-
+vector
+-
+string
+-
+algorithm
+-
+iostream
+-
+
+/home/mourad/Documents/CPP_LEKA/Git Leka Command Generator/Leka-Command-Generator/sources/LKCommandGenerator.cpp
+LKCommandGenerator.h
+-
+LKAlphaComSpecs.h
+-
+
