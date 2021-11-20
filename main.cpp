@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
       (required("-r","--right").set(motor_selected_scope,motor_scope::right) & integer("Right Spin",motor_right_spin) & integer("Right Speed",motor_right_speed) )%"Give instructions towards right wheel" 
      ) 
      |
-     (option("-H,--hex").set(motor_hex) & (
+     (option("-H","--hex").set(motor_hex) & (
       (required("-A","--all").set(motor_selected_scope,motor_scope::all) & value("Direction")([&](const char* s) { motor_left_spin = std::stoi(s,0,16);motor_right_spin = std::stoi(s,0,16); }) 
                                                         & value("Speed")([&](const char* s) { motor_left_speed = std::stoi(s,0,16);motor_right_speed = std::stoi(s,0,16); }) )%"Give same instructions towards both wheels"|
       (required("-D","--duo").set(motor_selected_scope,motor_scope::duo)  & value("Left Spin")([&](const char* s) { motor_left_spin = std::stoi(s,0,16); }) 

@@ -12,37 +12,44 @@ using frame_t = uint8_t;
 
 namespace LKCommandGenerator{
 
+
 class command_group
 {
     protected :
+
     frame_t length;
     frame_t id_command;
     std::vector<frame_t>ctrl_values;
 
     public:
-    command_group(){
-    }
 
-    command_group(frame_t id_command){
-        this->id_command=id_command;
-    }
+    command_group();
+    /**
+     * command_group 
+     * 
+     * @param  {frame_t} id_command : 
+     */
+    command_group(frame_t id_command);
 
-    ~command_group(){
+    ~command_group();
+   
+    /**
+     * get command group Id
+     * @return {frame_t}  : 
+     */
+    auto get_id_command()->frame_t;
 
-    }
-
-    auto get_id_command()->frame_t{
-        return id_command;
-    }
-
-    auto get_ctrl_values()->std::vector<frame_t>{
-        return ctrl_values;
-    }
-
-    auto update_crtl_values()->void{
-    this->ctrl_values.clear();
-    this->ctrl_values.push_back(this->id_command);
-    }
+    /**
+     * get control values
+     * @return {std::vector<frame_t>}  : 
+     */
+    auto get_ctrl_values()->std::vector<frame_t>;
+    
+    /**
+     * update data from command group
+     * @return {void}  : 
+     */
+    auto update_crtl_values()->void;
 
 };
 
@@ -64,206 +71,56 @@ class command_group_led : public command_group
 
     public :
 
-    command_group_led():command_group(){
+    command_group_led();
+    command_group_led(frame_t red_value,frame_t green_value,frame_t blue_value,int part=0,std::vector<frame_t>targets={});
 
-    }
-    command_group_led(frame_t red_value,frame_t green_value,frame_t blue_value,int part=0,std::vector<frame_t>targets={})
-    :command_group()
-    {
-        this->red_value=red_value;
-        this->green_value=green_value;
-        this->blue_value=blue_value;
-        set_part(part);
-        if(!targets.empty()){
-            set_scope(0);
-            update_targets(targets);
-        }
-        else{
-            set_scope(2);
-            update_all_targets();
-        }
-        update_id_command();
-    }
+    command_group_led(frame_t red_value,frame_t green_value,frame_t blue_value,int part,frame_t first_target,frame_t last_target);
+    /**
+     * set robot part
+     * @param  {int} param : 
+     * @return {void}      : 
+     */
+    auto set_part(int param)->void;
 
-    command_group_led(frame_t red_value,frame_t green_value,frame_t blue_value,int part,frame_t first_target,frame_t last_target)
-    :command_group()
-    {
-        this->red_value=red_value;
-        this->green_value=green_value;
-        this->blue_value=blue_value;
-        set_part(part);
-        set_scope(1);
-        update_range_targets(first_target,last_target);
-        update_id_command();
-    }
+    /**
+     * set the target scope
+     * @param  {int} param : 
+     * @return {auto}      : 
+     */
+    auto set_scope(int param)->void;
 
+    /**
+     * update list of targets
+     * @param  {std::vector<frame_t>targets} undefined : 
+     * @return {std::vector<frame_t>}                                  : 
+     */
+    auto update_targets(std::vector<frame_t>targets)->std::vector<frame_t>;
 
+    /**
+     * update list of targets from a range
+     * @param  {frame_t} first_target : 
+     * @param  {frame_t} last_target  : 
+     * @return {update list of targets}                 : 
+     */
+    auto update_range_targets(frame_t first_target,frame_t last_target)->std::vector<frame_t>;
 
-    auto set_part(int param)->void
-    {
-        switch (param)
-        {
-        case 0:
-           this->selected_part=part::ears;
-        break;
-
-        case 1:
-           this->selected_part=part::belt;
-        break;
-        
-        default:
-            break;
-        }
-        
-    }
-
-    auto set_scope(int param)->void
-    {
-        switch (param)
-        {
-        case 0:
-           this->selected_scope=scope::single;
-        break;
-
-        case 1:
-           this->selected_scope=scope::range;
-        break;
-
-        case 2:
-           this->selected_scope=scope::all;
-        break;
-        
-        default:
-        break;
-        }
-
-    }
-
-    auto update_targets(std::vector<frame_t>targets)->std::vector<frame_t>{
-        std::vector<frame_t>list_id;
-        if(this->selected_part==part::ears){
-            list_id=std::vector<frame_t>(list_id_led_ears.begin(),list_id_led_ears.end());
-        }
-
-        else if(this->selected_part==part::belt){
-            list_id=std::vector<frame_t>(list_id_led_belt.begin(),list_id_led_belt.end());
-        }
-
-        for(frame_t target : targets){
-        auto pos=std::find(std::begin(list_id), std::end(list_id), target);
-
-            if(pos != std::end(list_id)){
-                this->targets.push_back(target);
-            }
-
-        }
-
-        return this->targets;
-    }
-
-    auto update_range_targets(frame_t first_target,frame_t last_target)->std::vector<frame_t>{
-        std::vector<frame_t>list_id;
-        if(this->selected_part==part::ears){
-            list_id=std::vector<frame_t>(list_id_led_ears.begin(),list_id_led_ears.end());
-        }
-        else if(this->selected_part==part::belt){
-            list_id=std::vector<frame_t>(list_id_led_belt.begin(),list_id_led_belt.end());
-        }
-        auto start=std::find(std::begin(list_id), std::end(list_id), first_target);
-        auto end=std::find(std::begin(list_id), std::end(list_id), last_target);
-
-        int index_first_target;
-        int index_last_target;
-        bool in_bounds=false;
-
-        /* First target and last target in list*/
-        if(start != std::end(list_id) && end !=std::end(list_id)){
-            index_first_target=start-std::begin(list_id);
-            index_last_target=end-std::begin(list_id);
-            in_bounds=true;
-
-        }
-        
-        if(index_first_target<=index_last_target && in_bounds){
-         this->targets=std::vector<frame_t>(list_id.begin()+index_first_target,list_id.begin()+index_last_target+1);
-        }
-        return this->targets;
-    }
-
-    auto update_all_targets()->std::vector<frame_t>{
-        if(selected_part==part::ears){
-        this->targets=std::vector<frame_t>(list_id_led_ears.begin(),list_id_led_ears.end());
-        }
-        else{
-        this->targets=std::vector<frame_t>(list_id_led_belt.begin(),list_id_led_belt.end());
-        }
-        return this->targets;
-    }
-
-    auto update_id_command()->void{
-        if(selected_part==part::ears){
-            if(selected_scope==scope::all){
-                this->id_command=get_id_command_led_ears_all();
-            }
-            else if(selected_scope==scope::range){
-                this->id_command=get_id_command_led_ears_range();
-            }
-            else{
-                this->id_command=get_id_command_led_ears_single();
-            }
-        }
-        else{
-            if(selected_scope==scope::all){
-                this->id_command=get_id_command_led_belt_all();
-            }
-            else if(selected_scope==scope::range){
-                this->id_command=get_id_command_led_belt_range();
-            }
-            else{
-                this->id_command=get_id_command_led_belt_single();
-            }
-        }
-    }
+    /**
+     * update list of targets by set all the targets
+     * @return {update list of targets}  : 
+     */
+    auto update_all_targets()->std::vector<frame_t>;
     
-
-    auto update_crtl_values()->void{
-        switch (this->selected_scope)
-        {
-        case scope::single :
-        this->ctrl_values.clear();
-        for(frame_t target : this->targets){
-            this->ctrl_values.push_back(this->id_command);
-            this->ctrl_values.push_back(target);
-            this->ctrl_values.push_back(this->red_value);
-            this->ctrl_values.push_back(this->green_value);
-            this->ctrl_values.push_back(this->blue_value);
-        }
-        break;
-
-        case scope::range :
-            command_group::update_crtl_values();
-            this->ctrl_values.push_back(this->targets.front());
-            this->ctrl_values.push_back(this->targets.back());
-            this->ctrl_values.push_back(this->red_value);
-            this->ctrl_values.push_back(this->green_value);
-            this->ctrl_values.push_back(this->blue_value);
-        
-        break;
-
-            case scope::all:
-            command_group::update_crtl_values();
-            this->ctrl_values.push_back(this->red_value);
-            this->ctrl_values.push_back(this->green_value);
-            this->ctrl_values.push_back(this->blue_value);
-        
-        break;
-        
-        default:
-            break;
-        }
-
-    }
-
+    /**
+     * update command group id
+     * @return {void}  : 
+     */
+    auto update_id_command()->void;
+    
+    /**
+     * update data from command group
+     * @return {void}  : 
+     */
+    auto update_crtl_values()->void;
     
     auto get_id_command_led()->frame_t const;
 
@@ -299,89 +156,25 @@ class command_group_motor : public command_group
 
     public : 
 
-    command_group_motor(frame_t left_spin,frame_t left_speed,frame_t right_spin,frame_t right_speed,int scope=2):command_group(){
-        this->left_spin=left_spin;
-        this->right_spin=right_spin;
-        this->left_speed=left_speed;
-        this->right_speed=right_speed;
-        set_scope(scope);
-        update_id_command();
-    }
+    command_group_motor(frame_t left_spin,frame_t left_speed,frame_t right_spin,frame_t right_speed,int scope=2);
+    /**
+     * set the target scope
+     * @param  {int} param : 
+     * @return {void}      : 
+     */
+    auto set_scope(int param)->void;
 
-    auto set_scope(int param)->void
-    {
-        switch (param)
-        {
-        case 0:
-           this->selected_scope=scope::left;
-        break;
+    /**
+     * update command group id
+     * @return {void}  : 
+     */
+    auto update_id_command()->void;
 
-        case 1:
-           this->selected_scope=scope::right;
-        break;
-
-        case 2:
-           this->selected_scope=scope::duo;
-        break;
-
-        case 3:
-           this->selected_scope=scope::all;
-        break;
-        
-        default:
-            break;
-        }
-        
-    }
-
-    auto update_id_command()->void{
-        if(selected_scope==scope::all){
-            this->id_command=get_id_command_motor_all();
-        }
-        else if(selected_scope==scope::duo){
-            this->id_command=get_id_command_motor_duo();
-        }
-        else if(selected_scope==scope::left){
-            this->id_command=get_id_command_motor_left();
-        }
-        else{
-            this->id_command=get_id_command_motor_right();
-        }      
-    }
-
-    auto update_crtl_values()->void{
-
-        command_group::update_crtl_values();
-        
-        switch (this->selected_scope)
-        {
-        case scope::all:
-        this->ctrl_values.push_back(this->left_spin);
-        this->ctrl_values.push_back(this->left_speed);
-        break;
-
-        case scope::duo:
-        this->ctrl_values.push_back(this->left_spin);
-        this->ctrl_values.push_back(this->left_speed);
-        this->ctrl_values.push_back(this->right_spin);
-        this->ctrl_values.push_back(this->right_speed);       
-        break;
-
-        case scope::left:
-        this->ctrl_values.push_back(this->left_spin);
-        this->ctrl_values.push_back(this->left_speed);
-        break;
-
-        case scope::right:
-        this->ctrl_values.push_back(this->right_spin);
-        this->ctrl_values.push_back(this->right_speed); 
-        break;
-        
-        default:
-            break;
-        }
-
-    }
+    /**
+     * update data from command group
+     * @return {void}  : 
+     */
+    auto update_crtl_values()->void;
 
     auto get_id_command_motor()->frame_t const;
 
@@ -420,77 +213,64 @@ class Frame
 
     public :
 
-    Frame(){
-
-    }
-
-    Frame(std::vector<frame_t>data){
-        set_data(data);
-    }
-
+    Frame();
+    
+    Frame(std::vector<frame_t>data);
+    /**
+     * Start sequence
+     * @return {std::vector<frame_t>}  : 
+     */
     auto get_start_sequence()->std::vector<frame_t> const;
 
-    auto get_data()->std::vector<frame_t>
-    {
-        return this->data;
-    }
+    /**
+     * Get payload data of the packet
+     * @return {std::vector<frame_t>}  : 
+     */
+    auto get_data()->std::vector<frame_t>;
+    
+    /**
+     * Set payload data of the packet
+     * @param  {std::vector<frame_t>list} undefined : 
+     * @return {void}                               : 
+     */
+    auto set_data(std::vector<frame_t>list)->void;
 
-    auto set_data(std::vector<frame_t>list)->void
-    {
-        this->data=std::vector<frame_t>(list.begin(),list.end());
-    }
+    /**
+     * add frame list to data
+     * @param  {std::vector<frame_t>list} undefined : 
+     * @return {void}                               : 
+     */
+    auto add_data(std::vector<frame_t>list)->void;
 
-    auto add_data(std::vector<frame_t>list)->void
-    {
-        this->data.insert(this->data.end(),list.begin(),list.end());
-    }
+    /**
+     * Calculate length of the packet
+     * @return {frame_t}  : 
+     */
+    auto calculate_length()->frame_t;
 
-    auto calculate_length()->frame_t
-    {
-        frame_t length=0;
-        length+=start_sequence.size(); //start sequence
-        length+=1;//length
-        length+=data.size();//data
-        length+=1;//checksum
-        return length;
-    }
+    /**
+     * Calculate checksum of the packet payload data
+     * @return {frame_t}  : 
+     */
+    auto calculate_checksum()->frame_t;
 
-    auto calculate_checksum()->frame_t
-    {
-        frame_t checksum = 0;
-        for (frame_t cur_frame : data) {
-            checksum = (frame_t) (((checksum & 0xFF) >> 1) | (checksum << 7)); // Circular shift
-            checksum = (frame_t) (checksum + cur_frame); // Add segment
-            checksum &= 0b1111; // Apply bitmask
-        }
-        return checksum;
-    }
+    /**
+     * Make and return packet
+     * @return {std::vector<frame_t>}  : 
+     */
+    auto make_packet()->std::vector<frame_t>;
 
-    auto make_packet()->std::vector<frame_t>{
-        this->packet.clear();
-        this->packet.insert(this->packet.end(),this->start_sequence.begin(),this->start_sequence.end());
-        this->packet.push_back(calculate_length());
-        this->packet.insert(this->packet.end(),this->data.begin(),this->data.end());
-        this->packet.push_back(calculate_checksum());
-        return this->packet;
-    }
+    /**
+     * Display the packet
+     * @return {auto}  : 
+     */
+    auto display_packet()->void;
 
-    auto display_packet()->void{
-        std::cout << std::hex;
-        std::cout << std::endl;
-        std::cout << " [ ";
-        for(frame_t cur_frame : packet){
-            std::cout << static_cast<int>(cur_frame) << " ";
-        }
-        std::cout << "] ";
-        std::cout << std::endl;
-    }
-
-    auto send_packet()->void{
-         std::cout << std::endl;
-         std::cout << "Packet sent !!!";
-         std::cout << std::endl;
-    }
+    /**
+     * Send the packet to Leka (Soon)
+     * @return {auto}  : 
+     */
+    auto send_packet()->void;
 
 };
 
